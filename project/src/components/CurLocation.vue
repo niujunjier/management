@@ -2,7 +2,6 @@
   <div class="loc-bar">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item>您的位置:</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>欢迎页</el-breadcrumb-item>
     </el-breadcrumb>
   </div>

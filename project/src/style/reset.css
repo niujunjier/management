@@ -9,6 +9,7 @@ form,fieldset,input,textarea,p,blockquote,th,td {
 body{
     width: 100%;
     background-color: #ecf0f3;
+    overflow: hidden;
 }
 a{
     text-decoration: none;

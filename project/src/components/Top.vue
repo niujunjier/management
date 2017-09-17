@@ -1,14 +1,11 @@
 <template>
-  <div class="nav">
-    <h1>V联网</h1>
-    <el-menu theme="dark" class="el-menu-demo top-right" mode="horizontal" @select="handleSelect">
-      <el-submenu index="1">
+  <div class="">
+    <el-menu theme="dark" class="el-menu-demo nav" mode="horizontal" @select="handleSelect">
+      <h1>V联网</h1>
+      <el-submenu index="1" class="top-right">
         <template slot="title">admin</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
+        <el-menu-item index="2-1" class="el-icon-d-arrow-right"> 退出登录</el-menu-item>
       </el-submenu>
-      <el-menu-item index="2"><router-link to="/">欢迎页</router-link></el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -47,8 +44,9 @@ export default {
     margin: 10px 0 0 50px;
   }
   .top-right{
-    width: 25%;
+    width: 10%;
     float: right;
+    margin-right: 1vw;
   }
 }
 </style>
