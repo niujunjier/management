@@ -17,6 +17,7 @@
 import Menu from './view/Menu.vue'
 import Top from './components/Top.vue'
 import CurLocation from './components/CurLocation.vue'
+import data from './mock.js'
 
 export default {
   name: 'app',
@@ -24,6 +25,9 @@ export default {
     return {
 
     }
+  },
+  computed:{
+    
   },
   components: {
     myMenu: Menu,
@@ -41,12 +45,13 @@ export default {
 }
 .home-left {
   width: 200px;
-  height: 90vh;
+  height: calc(~"100% - 60px");
   position: absolute;
   #menu {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    background-color: #324157;
   }
 }
 #menu::-webkit-scrollbar {
@@ -55,7 +60,7 @@ export default {
   background-color: #F5F5F5;
 }
 .home-right{
-  border-top: 5px solid #5FB878;
+  border-top: 1px solid #5FB878;
   width: 100%;
   padding-left: 200px;
   height: 90vh;

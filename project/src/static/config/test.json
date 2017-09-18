@@ -1,0 +1,41 @@
+{   
+    "title": "测试列表",
+    "row":[
+        {
+            "name": "字符串",
+            "value": "str",
+            "type": "str"
+        },
+        {
+            "name": "状态",
+            "value": "status",
+            "fitter": {
+                "1":"是",
+                "0":"否"
+            },
+            "type": "status"
+        },
+        {
+            "name": "标签",
+            "value": "tag",
+            "type": "tag"
+        }
+    ],
+    "option":[
+        {
+            "text":"导出",
+            "type":"downLoad",
+            "url":"/test"
+        },
+        {
+            "text":"批量操作",
+            "type":"batch",
+            "url":"/test"
+        },
+        {
+            "text":"上传",
+            "type":"upLoad",
+            "url":"/test"
+        }
+    ]
+}

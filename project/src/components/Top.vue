@@ -16,7 +16,7 @@ export default {
   name: 'Top',
   data() {
     return {
-
+      
     }
   },
   components: {
@@ -34,19 +34,19 @@ export default {
 <style scoped lang="less">
 .nav {
   width: 100%;
-  height: 10vh;
+  // height: 7vh;
   background-color: #324157;
   h1 {
     font-family: "中软雅黑";
-    font-size: 1.7rem;
+    font-size: 3vh;
     color: #bfcbd9;
     float: left;
-    margin: 10px 0 0 50px;
+    margin: 1vh 0 0 50px;
   }
   .top-right{
-    width: 10%;
+    width: 100px;
     float: right;
-    margin-right: 1vw;
+    margin-right: 7vw;
   }
 }
 </style>

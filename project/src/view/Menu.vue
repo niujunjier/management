@@ -2,13 +2,13 @@
     <div id="menu">
         <el-row class="tac">
             <el-col>
-                <el-menu v-for="(item,i) in ['1','2','3','4','5','6','7','8','9','0']" unique-opened class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
-                    <el-submenu :index="item">
+                <el-menu v-for="(item,i) in menuList" router unique-opened class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
+                    <el-submenu :index="item.value">
                         <template slot="title">
                             <i class="el-icon-menu"></i>
-                            导航{{i}}
+                            {{item.name}}
                         </template>
-                        <el-menu-item :index="item">选项1</el-menu-item>
+                        <el-menu-item :index="son.router" v-for="(son,idx) in item.son">{{son.name}}</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </el-col>
@@ -19,9 +19,20 @@
 <script>
 export default {
     name: 'Menu',
-    deta() {
+    data() {
         return {
-
+            menuList:[
+                {
+                    name:'测试菜单',
+                    value:'test',
+                    son:[
+                        {
+                            name:'测试列表',
+                            router:'/testList'
+                        }
+                    ]
+                }
+            ]
         }
     },
     methods: {
@@ -37,7 +48,7 @@ export default {
 
 <style scope lang="less">
     #menu{
-        border-top: 5px solid #5FB878;
+        border-top: 3px solid #5FB878;
     }
     .el-menu{
         border-radius: 0 !important;

@@ -2,18 +2,23 @@
   <div class="loc-bar">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item>您的位置:</el-breadcrumb-item>
-      <el-breadcrumb-item>欢迎页</el-breadcrumb-item>
+      <el-breadcrumb-item>{{title}}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
   name: 'CurLocation',
   data() {
     return {
 
     }
+  },
+  computed:{
+    ...mapGetters(['title'])
   },
   components: {
 

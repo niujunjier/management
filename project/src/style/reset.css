@@ -42,3 +42,6 @@ q:before,q:after {
 abbr,acronym { 
     border: 0; 
 }
+td,th{
+    text-align: center !important;
+}
