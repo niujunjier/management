@@ -17,7 +17,10 @@
 import Menu from './view/Menu.vue'
 import Top from './components/Top.vue'
 import CurLocation from './components/CurLocation.vue'
-import data from './mock.js'
+import './mock/mock.js'
+import './mock/upload.js'
+import './mock/batch.js'
+import './mock/select.js'
 
 export default {
   name: 'app',

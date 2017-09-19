@@ -6,7 +6,8 @@ import * as mutations from './mutations'
 
 Vue.use(Vuex)
 const state = {
-  title: '欢迎页'
+  title: '欢迎页',
+  batchData:[]
 }
 
 const store = new Vuex.Store({
