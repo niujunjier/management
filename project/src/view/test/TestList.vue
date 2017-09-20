@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import ConfData from '../static/config/test.json'
-import MyTable from '../components/MyTable.vue'
+import ConfData from './list.json'
+import MyTable from '../../components/MyTable.vue'
 
 export default {
     name: 'testList',

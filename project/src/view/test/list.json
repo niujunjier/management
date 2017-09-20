@@ -50,6 +50,11 @@
             "name": "time"
         }
     ],
+    "addConfig": {
+        "text": "测试添加",
+        "path": "/addTest",
+        "url": "/addTest"
+    },
     "row": [
         {
             "name": "字符串",

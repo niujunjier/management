@@ -20,6 +20,11 @@
                 </el-form-item>
             </el-form>
         </div>
+        <div class="option-box">
+            <router-link :to="confData.addConfig.path">
+                <el-button size="large" :plain="true" type="info" :url="confData.addConfig.url">{{confData.addConfig.text}}</el-button>
+            </router-link>
+        </div>
         <el-table ref="multipleTable" :data="tableData.results" border style="width: 100%" fit @selection-change="handleSelectionChange">
             <el-table-column fixed type="selection" width="55"></el-table-column>
             <el-table-column type="index" width="50">
@@ -34,9 +39,9 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="150">
                 <template scope="scope">
-                    <el-button type="primary" icon="information" size="mini"></el-button>
-                    <el-button type="primary" icon="edit" size="mini"></el-button>
-                    <el-button type="primary" icon="delete" size="mini"></el-button>
+                    <el-button type="info" icon="information" size="mini"></el-button>
+                    <el-button type="info" icon="edit" size="mini"></el-button>
+                    <el-button type="info" icon="delete" size="mini"></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -47,16 +52,16 @@
         <div class="button-box">
             <span v-for="(aBtn,key) in confData.options" class="btn-clothes">
                 <el-upload class="upload-demo" :show-file-list="false" v-if="aBtn.type == 'upLoad'" :action="aBtn.url" :on-success="uploadSuccess">
-                    <el-button type="primary">
+                    <el-button type="info">
                         {{aBtn.text}}
                         <i class="el-icon-upload el-icon--right"></i>
                     </el-button>
                 </el-upload>
-                <el-button v-else-if="aBtn.type == 'downLoad'" type="primary">
+                <el-button v-else-if="aBtn.type == 'downLoad'" type="info">
                     {{aBtn.text}}
                     <i class="el-icon-document el-icon--right"></i>
                 </el-button>
-                <el-button v-else-if="aBtn.type == 'batch'" type="primary" @click="batchOption(aBtn.url)">
+                <el-button v-else-if="aBtn.type == 'batch'" type="info" @click="batchOption(aBtn.url)">
                     {{aBtn.text}}
                     <i class="el-icon-setting el-icon--right"></i>
                 </el-button>
@@ -120,7 +125,7 @@ export default {
         this.confData.search.forEach(function(item, i) {
             this.$set(this.formInline,item.name,'')
             if(item.type == 'dynamic'){
-                this.$http.post(item.url, { pageNo: 1 })
+                this.$http.post(item.url)
                 .then(function(response) {
                     console.log(response);
                     if (response.data.responseCode == 200) {
@@ -243,8 +248,14 @@ export default {
     }
     .search-box {
         background-color: #ecf0f3;
-        margin-bottom: 20px;
         padding: 20px 10px 10px 10px;
+    }
+    .option-box{
+        padding: 10px 10px 10px 10px;
+        background-color: #ecf0f3;
+        border-left: 4px solid #73ccff;
+        margin: 10px 0 10px 0;
+        padding-left: 50px;
     }
 }
 
