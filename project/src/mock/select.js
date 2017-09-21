@@ -7,7 +7,7 @@ export default Mock.mock('/select', function (options) {
         'responseCode': 200,
         'results|10': [
             {
-                "value|+1": 1,
+                value: Mock.Random.last(),
                 label: Mock.Random.cname()
             }
         ]

@@ -1,48 +1,50 @@
 <template>
     <div class="add-box">
         <div class="add-block">
-            <h2>{{option.title}}</h2>
             <el-form :model="ruleForm" label-position="left" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
-                <div v-for="(item,i) in option.content" :class="{'input-clothes':(item.type != 'checkBox'),'input-clothes1':(item.type == 'checkBox')}">
-                    <el-form-item v-if="item.type == 'input'" :label="item.label" :prop="item.name" required>
+                <div v-for="(item,i) in option" :class="{'input-clothes':(item.type != 'checkBox' && item.type != 'line'),'input-clothes1':(item.type == 'checkBox')}">
+                    <el-form-item v-if="item.type == 'input'" :label="item.label" :prop="item.name">
                         <el-input v-model="ruleForm[item.name]" :placeholder="item.holder"></el-input>
                     </el-form-item>
-                    <el-form-item v-else-if="item.type == 'statical'" :label="item.label" :prop="item.name" required>
+                    <h2 v-else-if="item.type == 'line'">{{item.text}}</h2>
+                    <el-form-item v-else-if="item.type == 'statical'" :label="item.label" :prop="item.name">
                         <el-select v-model="ruleForm[item.name]" :placeholder="item.holder">
                             <el-option v-for="(aSel,i) in item.data" :label="aSel.label" :value="aSel.value"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item v-else-if="item.type == 'dynamic'" :label="item.label" :prop="item.name" required>
+                    <el-form-item v-else-if="item.type == 'dynamic'" :label="item.label" :prop="item.name">
                         <el-select v-model="ruleForm[item.name]" :placeholder="item.holder">
                             <el-option v-for="(aSel,i) in dynamicData[item.name]" :label="aSel.label" :value="aSel.value"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item v-else-if="item.type == 'radio'" :label="item.label" :prop="item.name" required>
+                    <el-form-item v-else-if="item.type == 'radio'" :label="item.label" :prop="item.name">
                         <el-radio-group v-model="ruleForm[item.name]">
                             <el-radio v-for="(aRa,k) in item.data" :label="aRa"></el-radio>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item v-else-if="item.type == 'time'" :label="item.label" :prop="item.name" required>
+                    <el-form-item v-else-if="item.type == 'time'" :label="item.label" :prop="item.name">
                         <el-date-picker v-model="ruleForm[item.name]" align="right" type="date" :placeholder="item.holder" :picker-options="pickerOptions">
                         </el-date-picker>
                     </el-form-item>
-                    <el-form-item v-else-if="item.type == 'switch'" :label="item.label" :prop="item.name" required>
+                    <el-form-item v-else-if="item.type == 'switch'" :label="item.label" :prop="item.name">
                         <el-switch :on-text="item.on" :off-text="item.off" v-model="ruleForm[item.name]"></el-switch>
                     </el-form-item>
-                    <el-form-item v-else-if="item.type == 'checkBox'" :label="item.label" :prop="item.name" required>
+                    <el-form-item v-else-if="item.type == 'checkBox'" :label="item.label" :prop="item.name">
                         <el-checkbox-group v-model="ruleForm.param7">
                             <el-checkbox v-for="(aCh,k) in item.data" :label="aCh" :name="item.name"></el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
                     </el-form-item>
-                    <el-form-item v-else-if="item.type == 'textarea'" :label="item.label" :prop="item.name" required>
+                    <el-form-item v-else-if="item.type == 'textarea'" :label="item.label" :prop="item.name">
                         <el-input type="textarea" resize="none" :rows="3" v-model="ruleForm[item.name]"></el-input>
                     </el-form-item>
                 </div>
-                <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-                    <el-button @click="resetForm('ruleForm')">重置</el-button>
-                </el-form-item>
+                <div class="add-block1">
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    </el-form-item>
+                </div>
             </el-form>
         </div>
     </div>
@@ -56,7 +58,7 @@ export default {
         return {
             dynamicData: {},
             ruleForm: {
-                // type:''
+
             },
             pickerOptions: {
                 shortcuts: [{
@@ -80,30 +82,7 @@ export default {
                     }
                 }]
             },
-            rules: {
-                name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                ],
-                region: [
-                    { required: true, message: '请选择活动区域', trigger: 'change' }
-                ],
-                date1: [
-                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                ],
-                date2: [
-                    { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-                ],
-                type: [
-                    { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-                ],
-                resource: [
-                    { required: true, message: '请选择活动资源', trigger: 'change' }
-                ],
-                desc: [
-                    { required: true, message: '请填写活动形式', trigger: 'blur' }
-                ]
-            }
+            rules: {}
         }
     },
     props: {
@@ -111,7 +90,7 @@ export default {
     },
     beforeMount() {
         let moObj = {};
-        this.option.content.forEach(function(item, i) {
+        this.option.forEach(function(item, i) {
             if (item.default) {
                 moObj[item.name] = item.default;
                 if (item.type == 'time') {
@@ -120,7 +99,7 @@ export default {
                 } else {
                     this.$set(this.ruleForm, item.name, item.default)
                 }
-            } else {
+            } else if (item.name) {
                 moObj[item.name] = '';
                 if (item.type == 'checkBox') {
                     this.$set(this.ruleForm, item.name, [])
@@ -139,6 +118,9 @@ export default {
                         console.log(error);
                     })
             }
+            if (item.rule) {
+                this.$set(this.rules, item.name, item.rule)
+            }
         }.bind(this));
     },
     mounted() {
@@ -151,7 +133,8 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    console.log(this.ruleForm)
+                    // console.log(this.ruleForm)
+                    this.$emit('submitData',this.ruleForm)
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -170,7 +153,7 @@ export default {
 .add-box {
     padding: 0 30px 10px 0;
     h2 {
-        padding-left: 2%;
+        // padding-left: 2%;
         width: calc(~"100% - 20px");
         font-family: "微软雅黑";
         margin-left: 20px;
@@ -178,19 +161,24 @@ export default {
         color: #58B7FF;
         line-height: 50px;
         border-bottom: 2px solid #58B7FF;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
-    .input-clothes{
+    .input-clothes {
         width: 40%;
         margin-left: 3%;
         display: inline-block;
     }
-    .input-clothes1{
+    .input-clothes1 {
         width: 80%;
         margin-left: 3%;
     }
-    .el-input{
+    .el-input {
         max-width: 220px;
+    }
+    .add-block1 {
+        text-align: center;
+        padding-right: 190px;
+        margin-top: 50px;
     }
 }
 </style>
