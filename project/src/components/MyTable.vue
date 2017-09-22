@@ -39,9 +39,11 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="150">
                 <template scope="scope">
-                    <el-button type="info" icon="information" size="mini"></el-button>
-                    <el-button type="info" icon="edit" size="mini"></el-button>
-                    <el-button type="info" icon="delete" size="mini"></el-button>
+                    <span v-for="(aOp,p) in confData.lineOption" class="line-icon">
+                        <el-button v-if="aOp.type == 'delete'" type="info" icon="delete" size="mini" @click="del(scope.row,aOp)"></el-button>
+                        <el-button v-else-if="aOp.type == 'information'" type="info" icon="information" size="mini" @click="info(scope.row,aOp)"></el-button>
+                        <el-button v-else-if="aOp.type == 'edit'" type="info" icon="edit" size="mini"></el-button>
+                    </span>
                 </template>
             </el-table-column>
         </el-table>
@@ -77,7 +79,7 @@ export default {
     name: 'Top',
     data() {
         return {
-            a:'',
+            a: '',
             tableData: [],
             dynamicData: {},
             formInline: {},
@@ -123,36 +125,39 @@ export default {
         console.log(this.confData.search)
         let moData = {};
         this.confData.search.forEach(function(item, i) {
-            this.$set(this.formInline,item.name,'')
-            if(item.type == 'dynamic'){
+            this.$set(this.formInline, item.name, '')
+            if (item.type == 'dynamic') {
                 this.$http.post(item.url)
+                    .then(function(response) {
+                        console.log(response);
+                        if (response.data.responseCode == 200) {
+                            this.$set(this.dynamicData, item.name, response.data.results)
+                        }
+                    }.bind(this))
+                    .catch(function(error) {
+                        console.log(error);
+                    })
+            }
+        }.bind(this));
+    },
+    mounted() {
+        this.formInline.pageNo = 1;
+        this.setTitle(this.confData.title)
+        this.getlist();
+    },
+    methods: {
+        ...mapActions(['setTitle', 'setBatch']),
+        getlist() {
+            this.$http.post(this.confData.listUrl, this.formInline)
                 .then(function(response) {
-                    console.log(response);
                     if (response.data.responseCode == 200) {
-                        this.$set(this.dynamicData,item.name,response.data.results)
+                        this.tableData = response.data;
                     }
                 }.bind(this))
                 .catch(function(error) {
                     console.log(error);
                 })
-            }
-        }.bind(this));
-    },
-    mounted() {
-        this.setTitle(this.confData.title)
-        this.$http.post(this.confData.listUrl, { pageNo: 1 })
-            .then(function(response) {
-                console.log(response);
-                if (response.data.responseCode == 200) {
-                    this.tableData = response.data;
-                }
-            }.bind(this))
-            .catch(function(error) {
-                console.log(error);
-            })
-    },
-    methods: {
-        ...mapActions(['setTitle', 'setBatch']),
+        },
         remoteMethod(url) {
             console.log(url)
         },
@@ -170,26 +175,19 @@ export default {
         },
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
-            this.$http.post(this.confData.listUrl, { pageNo: val })
-                .then(function(response) {
-                    console.log(response);
-                    if (response.data.responseCode == 200) {
-                        this.tableData = response.data;
-                    }
-                }.bind(this))
-                .catch(function(error) {
-                    console.log(error);
-                })
+            this.formInline.pageNo = val;
+            this.getlist();
         },
-        uploadSuccess(res) {
-            if (res.responseCode == 200) {
+        uploadSuccess(response) {
+            if (response.responseCode == 200) {
                 this.$message({
                     message: '导入成功',
                     type: 'success'
                 });
+                this.getlist();
             } else {
                 this.$message({
-                    message: res.responseText,
+                    message: response.responseText,
                     type: 'warning'
                 });
             }
@@ -202,28 +200,68 @@ export default {
                     type: 'warning'
                 });
             } else {
-                this.$http.post(url, this.batchData)
-                    .then(function(response) {
-                        if (response.data.responseCode == 200) {
-                            this.$message({
-                                message: '操作成功',
-                                type: 'success'
-                            });
-                            this.$refs.multipleTable.clearSelection();
-                        } else {
-                            this.$message({
-                                message: res.responseText,
-                                type: 'warning'
-                            });
-                        }
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.log(error);
-                    })
+                this.$confirm('确定继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$http.post(url, this.batchData)
+                        .then(function(response) {
+                            if (response.data.responseCode == 200) {
+                                this.$message({
+                                    message: '操作成功',
+                                    type: 'success'
+                                });
+                                this.$refs.multipleTable.clearSelection();
+                            } else {
+                                this.$message({
+                                    message: response.responseText,
+                                    type: 'warning'
+                                });
+                            }
+                        }.bind(this))
+                        .catch(function(error) {
+                            console.log(error);
+                        })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消'
+                    });
+                });
             }
         },
         onSubmit() {
             console.log(this.formInline);
+            this.$http.post(this.confData.listUrl, this.formInline)
+                .then(function(response) {
+                    if (response.data.responseCode == 200) {
+                        this.tableData = response.data;
+                    }
+                }.bind(this))
+                .catch(function(error) {
+                    console.log(error);
+                })
+        },
+        del(data, op) {
+            this.$confirm('确定删除?, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$emit('del', data, op, function() {
+                this.getlist();
+                }.bind(this))
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        info(data, op) {
+            console.log(data, op)
+            this.$router.push({ name: op.path, params: { Id: data.ID }})
         }
     }
 }
@@ -246,11 +284,14 @@ export default {
             margin-left: 15px;
         }
     }
+    .line-icon {
+        margin-left: 2px;
+    }
     .search-box {
         background-color: #ecf0f3;
         padding: 20px 10px 10px 10px;
     }
-    .option-box{
+    .option-box {
         padding: 10px 10px 10px 10px;
         background-color: #ecf0f3;
         border-left: 4px solid #73ccff;

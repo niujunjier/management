@@ -7,7 +7,8 @@ import * as mutations from './mutations'
 Vue.use(Vuex)
 const state = {
   title: '欢迎页',
-  batchData:[]
+  batchData:[],
+  searchData: {}
 }
 
 const store = new Vuex.Store({

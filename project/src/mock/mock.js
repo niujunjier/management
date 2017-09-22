@@ -43,13 +43,68 @@ export default Mock.mock('/', function (options) {
         'responseText': '请求成功',
         'responseCode': 200,
         'pageNo': param.pageNo,
-        'pageSize': 50,
-        'count': 500,
-        'results|10': [
+        'pageSize': 10,
+        'count': 100,
+        'results': [
             {
                 str: Mock.Random.cname(),
                 tag: '1,2,3,4',
-                'status|0-1': 1
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
+            },
+            {
+                str: Mock.Random.cname(),
+                tag: '1,2,3,4',
+                'status|0-1': 1,
+                'ID|+1': 1
             }
         ]
     })

@@ -21,6 +21,9 @@ import './mock/mock.js'
 import './mock/upload.js'
 import './mock/batch.js'
 import './mock/select.js'
+import './mock/add.js'
+import './mock/delete.js'
+import './mock/info.js'
 
 export default {
   name: 'app',

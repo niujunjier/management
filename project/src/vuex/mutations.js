@@ -5,3 +5,7 @@ export const setTitle = (state,param) => {
 export const setBatch = (state,param) => {
     state.batchData = param;
 }
+
+export const setSearch = (state,param) => {
+    state.searchData = param;
+}

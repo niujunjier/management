@@ -5,9 +5,33 @@ export default Mock.mock('/select', function (options) {
     return Mock.mock({
         'responseText': '请求成功',
         'responseCode': 200,
-        'results|10': [
+        'results': [
             {
-                value: Mock.Random.last(),
+                value: '1',
+                label: Mock.Random.cname()
+            },
+            {
+                value: '2',
+                label: Mock.Random.cname()
+            },
+            {
+                value: '3',
+                label: Mock.Random.cname()
+            },
+            {
+                value: '4',
+                label: Mock.Random.cname()
+            },
+            {
+                value:'5',
+                label: Mock.Random.cname()
+            },
+            {
+                value: '6',
+                label: Mock.Random.cname()
+            },
+            {
+                value: '7',
                 label: Mock.Random.cname()
             }
         ]
