@@ -10,6 +10,9 @@
                     <el-form-item v-else-if="item.type == 'status'" :label="item.label">
                         <el-input v-model="item.filter[infoData[item.name]]" :readonly="true"></el-input>
                     </el-form-item>
+                    <el-form-item v-else-if="item.type == 'viewArea'" :label="item.label">
+                        <el-input type="textarea" resize="none" :rows="3" v-model="infoData[item.name]" :readonly="true"></el-input>
+                    </el-form-item>
                 </el-col>
                 <el-col>
                     <el-form-item>

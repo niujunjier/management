@@ -18,6 +18,11 @@ const data = {
                 1:"是",
                 0:"否"
             }
+        },
+        {
+            type:"viewArea",
+            name: "param3",
+            label: "测试三"
         }
     ]
 }

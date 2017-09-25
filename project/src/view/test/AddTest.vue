@@ -12,7 +12,7 @@ export default {
   name: 'addTest',
   data() {
     return {
-      confData: ConfData
+      confData: ConfData.option
     }
   },
   components: {

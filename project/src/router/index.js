@@ -4,6 +4,7 @@ import Home from '@/view/Home'
 import TestList from '@/view/test/TestList'
 import AddTest from '@/view/test/AddTest'
 import InfoTest from '@/view/test/TestInfo'
+import TestEdit from '@/view/test/TestEdit'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ export default new Router({
       path: '/infoTest',
       name: 'infoTest',
       component: InfoTest
+    },
+    {
+      path: '/testEdit',
+      name: 'testEdit',
+      component: TestEdit
     }
   ]
 })

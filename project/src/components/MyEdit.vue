@@ -1,7 +1,7 @@
 <template>
     <div class="add-box">
         <div class="add-block">
-            <el-form :model="ruleForm" label-position="right" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
+            <el-form :model="ruleForm" label-position="left" :rules="rules" ref="ruleForm" label-width="110px" class="demo-ruleForm">
                 <el-row>
                     <el-col v-for="(item,i) in option" :xs="24" :sm="24" :md="(item.type=='line'||item.type=='checkBox')?24:12" :lg="(item.type=='line'||item.type=='checkBox')?24:8">
                         <el-form-item v-if="item.type == 'input'" :label="item.label" :prop="item.name">
@@ -43,8 +43,7 @@
                     <el-col>
                         <el-form-item>
                             <el-button @click="goBack" type="primary" icon="arrow-left">返回</el-button>
-                            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-                            <el-button type="warning" @click="resetForm('ruleForm')">重置</el-button>
+                            <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -60,9 +59,7 @@ export default {
     data() {
         return {
             dynamicData: {},
-            ruleForm: {
-
-            },
+            ruleForm: {},
             pickerOptions: {
                 shortcuts: [{
                     text: '今天',
@@ -89,38 +86,35 @@ export default {
         }
     },
     props: {
-        option: {}
+        option: {},
+        infoData: {}
     },
-    beforeMount() {
-        let moObj = {};
+    watch: {
+        infoData(newVal) {
+            this.option.forEach(function(item, i) {
+                if (item.name) {
+                    this.$set(this.ruleForm, item.name, newVal[item.name])
+                    if (item.type == 'dynamic') {
+                        this.$http.post(item.url)
+                            .then(function(response) {
+                                if (response.data.responseCode == 200) {
+                                    this.$set(this.dynamicData, item.name, response.data.results)
+                                }
+                            }.bind(this))
+                            .catch(function(error) {
+                                console.log(error);
+                            })
+                    }
+                }
+                if (item.rule) {
+                    this.$set(this.rules, item.name, item.rule)
+                }
+            }.bind(this));
+            console.log(this.ruleForm)
+        }
+    },
+    beforeMount(){
         this.option.forEach(function(item, i) {
-            if (item.default) {
-                moObj[item.name] = item.default;
-                if (item.type == 'time') {
-                    this.$set(this.ruleForm, item.name, item.default)
-                    console.log(this.ruleForm[item.name])
-                } else {
-                    this.$set(this.ruleForm, item.name, item.default)
-                }
-            } else if (item.name) {
-                moObj[item.name] = '';
-                if (item.type == 'checkBox') {
-                    this.$set(this.ruleForm, item.name, [])
-                } else {
-                    this.$set(this.ruleForm, item.name, '')
-                }
-            }
-            if (item.type == 'dynamic') {
-                this.$http.post(item.url)
-                    .then(function(response) {
-                        if (response.data.responseCode == 200) {
-                            this.$set(this.dynamicData, item.name, response.data.results)
-                        }
-                    }.bind(this))
-                    .catch(function(error) {
-                        console.log(error);
-                    })
-            }
             if (item.rule) {
                 this.$set(this.rules, item.name, item.rule)
             }
@@ -134,18 +128,15 @@ export default {
     },
     methods: {
         submitForm(formName) {
+            console.log(this.ruleForm)
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    // console.log(this.ruleForm)
                     this.$emit('submitData', this.ruleForm)
                 } else {
                     console.log('error submit!!');
                     return false;
                 }
             });
-        },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
         },
         goBack() {
             window.history.go(-1)
@@ -171,7 +162,7 @@ export default {
     .el-input {
         max-width: 220px;
     }
-    .el-textarea{
+    .el-textarea {
         max-width: 300px;
     }
 }

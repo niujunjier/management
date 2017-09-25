@@ -34,14 +34,15 @@ export default {
 <style scoped lang="less">
 .nav {
   width: 100%;
-  // height: 7vh;
   background-color: #324157;
   h1 {
     font-family: "中软雅黑";
-    font-size: 3vh;
+    font-size: 25px;
     color: #bfcbd9;
     float: left;
-    margin: 1vh 0 0 50px;
+    height: 60px;
+    line-height: 60px;
+    margin-left: 50px;
   }
   .top-right{
     width: 100px;

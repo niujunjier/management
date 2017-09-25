@@ -20,10 +20,10 @@ export default {
       myInfo: MyInfo
   },
   beforeMount(){
-      this.param = this.$route.params
+      this.param = this.$route.query
   },
   mounted(){
-      console.log(this.$route.params)
+      console.log(this.$route.query)
   },
   methods: {
     

@@ -42,7 +42,7 @@
                     <span v-for="(aOp,p) in confData.lineOption" class="line-icon">
                         <el-button v-if="aOp.type == 'delete'" type="info" icon="delete" size="mini" @click="del(scope.row,aOp)"></el-button>
                         <el-button v-else-if="aOp.type == 'information'" type="info" icon="information" size="mini" @click="info(scope.row,aOp)"></el-button>
-                        <el-button v-else-if="aOp.type == 'edit'" type="info" icon="edit" size="mini"></el-button>
+                        <el-button v-else-if="aOp.type == 'edit'" type="info" icon="edit" size="mini" @click="edit(scope.row,aOp)"></el-button>
                     </span>
                 </template>
             </el-table-column>
@@ -261,7 +261,11 @@ export default {
         },
         info(data, op) {
             console.log(data, op)
-            this.$router.push({ name: op.path, params: { Id: data.ID }})
+            this.$router.push({ name: op.path, query: { Id: data.ID }})
+        },
+        edit(data, op){
+            console.log(data, op)
+            this.$router.push({ name: op.path, query: { Id: data.ID }})
         }
     }
 }

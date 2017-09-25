@@ -87,8 +87,6 @@ const data = {
         },
         {
             type: "edit",
-            info: "/information",
-            url:"/edit",
             path:"testEdit"
         }
     ],
