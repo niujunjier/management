@@ -25,7 +25,7 @@ export default {
         this.$http.post('/info', this.param)
             .then(function(response) {
                 if (response.data.responseCode == 200) {
-                    this.infoData = this.infoFactory(response.data.results)
+                    this.infoData = ConfData.infoFactory(response.data.results)
                     console.log(this.infoData)
                 } else {
                     this.$message({
@@ -39,20 +39,9 @@ export default {
             })
     },
     methods: {
-        infoFactory(data){
-            let facData = JSON.parse(JSON.stringify(data))
-            for(let key in facData){
-                console.log(key)
-                if(key == 'param8')
-                    facData[key] = facData[key].split(',');
-                else if(key == 'param5')
-                    facData[key] = new Date(facData[key]);
-            }
-            return facData
-        },
         getFormData(data) {
             console.log(data)
-            let facData = this.dataFactory(data);
+            let facData = ConfData.dataFactory(data);
             this.$http.post('/add', facData)
                 .then(function(response) {
                     if (response.data.responseCode == 200) {
@@ -73,9 +62,6 @@ export default {
                 .catch(function(error) {
                     console.log(error);
                 })
-        },
-        dataFactory(data) {
-            return data;
         }
     }
 }

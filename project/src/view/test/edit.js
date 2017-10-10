@@ -3,6 +3,26 @@ import { checkPhone, checkEmail } from '../../static/utils/check.js'
 const data = {
     info: "/information",
     url: "/edit",
+    infoFactory(data) {
+        let facData = JSON.parse(JSON.stringify(data))
+        //your code here 
+        for (let key in facData) {
+            console.log(key)
+            if (key == 'param8')
+                facData[key] = facData[key].split(',');
+            else if (key == 'param5')
+                facData[key] = new Date(facData[key]);
+        }
+        //以上区域是自定义代码 
+        return facData
+    },
+    dataFactory(data) {
+        let facData = JSON.parse(JSON.stringify(data))
+        //your code here 
+        
+        //以上区域是自定义代码 
+        return facData
+    },
     option: [
         {
             type: "line",
@@ -73,7 +93,7 @@ const data = {
             name: "param6",
             label: "单选按钮",
             data: ["选项一", "选项二"]
-        },  
+        },
         {
             type: "switch",
             name: "param7",

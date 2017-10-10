@@ -21,7 +21,7 @@ export default {
   methods: {
     getFormData(data) {
       console.log(data)
-      let facData = this.dataFactory(data);
+      let facData = ConfData.dataFactory(data);
       this.$http.post('/add', facData)
         .then(function(response) {
           if (response.data.responseCode == 200) {
@@ -42,9 +42,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         })
-    },
-    dataFactory(data) {
-      return data;
     }
   }
 }

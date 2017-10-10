@@ -2,6 +2,13 @@ import { checkPhone, checkEmail } from '../../static/utils/check.js'
 
 const data = {
     url: "/add",
+    dataFactory(data) {
+        let facData = JSON.parse(JSON.stringify(data))
+        //your code here 
+        
+        //以上区域是自定义代码 
+        return facData
+    },
     option: [
         {
             type: "line",
